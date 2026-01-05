@@ -5,11 +5,11 @@ COMMON: &common
 development:
   <<: *common
   DEBUG: True
-  SQLALCHEMY_DATABASE_URI: 'mysql+pymysql://root:database-1.chc8a4usconk.eu-north-1.rds.amazonaws.com@3306/lab4'
+  SQLALCHEMY_DATABASE_URI: 'mysql+pymysql://root:Abonter7894!@database-1.chc8a4usconk.eu-north-1.rds.amazonaws.com@3306/lab4'
 
 production:
   <<: *common
-  SQLALCHEMY_DATABASE_URI: 'mysql+pymysql://root:database-1.chc8a4usconk.eu-north-1.rds.amazonaws.com@3306/lab4'
+  SQLALCHEMY_DATABASE_URI: 'mysql+pymysql://root:Abonter7894!@database-1.chc8a4usconk.eu-north-1.rds.amazonaws.com@3306/lab4'
 
 ADDITIONAL_CONFIG:
   MYSQL_ROOT_USER: root
