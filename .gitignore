@@ -1,0 +1,12 @@
+# venv
+venv/
+lab4/app/venv/
+.venv/
+
+# python
+__pycache__/
+*.pyc
+
+# env/config
+.env
+config/
