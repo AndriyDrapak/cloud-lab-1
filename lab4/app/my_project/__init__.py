@@ -31,32 +31,31 @@ def create_app(app_config: Dict[str, Any], additional_config: Dict[str, Any]) ->
     register_routes(app)
 
     Swagger(app, config={
-        'headers': [],
-        'specs': [
+        "headers": [],
+        "specs": [
             {
-                'endpoint': 'apispec_1',
-                'route': '/apispec_1.json',
-                'rule_filter': lambda rule: True,  # include all endpoints
-                'model_filter': lambda tag: True,
+                "endpoint": "apispec_1",
+                "route": "/apispec_1.json",
+                "rule_filter": lambda rule: True,  # include all endpoints
+                "model_filter": lambda tag: True,
             }
         ],
-        'swagger_ui': True,
-        'specs_route': '/apidocs/',
+        "swagger_ui": True,
+        "specs_route": "/apidocs/",
+        "static_url_path": "/flasgger_static",  # <-- FIX: правильний шлях статики Flasgger
     }, template={
-        'swagger': '2.0',
-        'info': {
-            'title': 'Lab4 API',
-            'description': 'REST endpoints documentation (Flasgger)',
-            'version': '1.0.0',
+        "swagger": "2.0",
+        "info": {
+            "title": "Lab4 API",
+            "description": "REST endpoints documentation (Flasgger)",
+            "version": "1.0.0",
         },
     })
 
-    @app.get('/')
+    @app.get("/")
     def _root():
-        # Convenience redirect for the browser
         from flask import redirect
-        return redirect('/apidocs/')
-
+        return redirect("/apidocs/")
 
     return app
 
