@@ -10,11 +10,35 @@ bus_routes_bp = Blueprint('bus_routes', __name__, url_prefix='/bus-routes')
 
 @bus_routes_bp.get('')
 def get_all_bus_routes() -> Response:
+    """
+    GET /bus-routes
+    ---
+    tags:
+      - Bus Routes
+    responses:
+      200:
+        description: OK
+    """
     return make_response(jsonify(bus_routes_controller.find_all()), HTTPStatus.OK)
 
 
 @bus_routes_bp.post('')
 def create_bus_routes() -> Response:
+    """
+    POST /bus-routes
+    ---
+    tags:
+      - Bus Routes
+    parameters:
+      - in: body
+        name: body
+        required: true
+        schema:
+          type: object
+    responses:
+      201:
+        description: OK
+    """
     content = request.get_json()
     bus_routes = BusRoutes.create_from_dto(content)
     bus_routes_controller.create(bus_routes)
@@ -23,11 +47,44 @@ def create_bus_routes() -> Response:
 
 @bus_routes_bp.get('/<int:bus_routes_id>')
 def get_bus_routes(bus_routes_id: int) -> Response:
+    """
+    GET /bus-routes/<int:bus_routes_id>
+    ---
+    tags:
+      - Bus Routes
+    parameters:
+      - name: bus_routes_id
+        in: path
+        required: true
+        type: integer
+    responses:
+      200:
+        description: OK
+    """
     return make_response(jsonify(bus_routes_controller.find_by_id(bus_routes_id)), HTTPStatus.OK)
 
 
 @bus_routes_bp.put('/<int:bus_routes_id>')
 def update_bus_routes(bus_routes_id: int) -> Response:
+    """
+    PUT /bus-routes/<int:bus_routes_id>
+    ---
+    tags:
+      - Bus Routes
+    parameters:
+      - name: bus_routes_id
+        in: path
+        required: true
+        type: integer
+      - in: body
+        name: body
+        required: true
+        schema:
+          type: object
+    responses:
+      200:
+        description: OK
+    """
     content = request.get_json()
     bus_routes = BusRoutes.create_from_dto(content)
     bus_routes_controller.update(bus_routes_id, bus_routes)
@@ -36,6 +93,25 @@ def update_bus_routes(bus_routes_id: int) -> Response:
 
 @bus_routes_bp.patch('/<int:bus_routes_id>')
 def patch_bus_routes(bus_routes_id: int) -> Response:
+    """
+    PATCH /bus-routes/<int:bus_routes_id>
+    ---
+    tags:
+      - Bus Routes
+    parameters:
+      - name: bus_routes_id
+        in: path
+        required: true
+        type: integer
+      - in: body
+        name: body
+        required: true
+        schema:
+          type: object
+    responses:
+      200:
+        description: OK
+    """
     content = request.get_json()
     bus_routes_controller.patch(bus_routes_id, content)
     return make_response("bus_routes updated", HTTPStatus.OK)
@@ -43,15 +119,57 @@ def patch_bus_routes(bus_routes_id: int) -> Response:
 
 @bus_routes_bp.delete('/<int:bus_routes_id>')
 def delete_bus_routes(bus_routes_id: int) -> Response:
+    """
+    DELETE /bus-routes/<int:bus_routes_id>
+    ---
+    tags:
+      - Bus Routes
+    parameters:
+      - name: bus_routes_id
+        in: path
+        required: true
+        type: integer
+    responses:
+      200:
+        description: OK
+    """
     bus_routes_controller.delete(bus_routes_id)
     return make_response("bus_routes deleted", HTTPStatus.OK)
 
 
 @bus_routes_bp.get('/get-busses-by-route/<int:route_id>')
 def get_busses_by_route(route_id: int) -> Response:
+    """
+    GET /bus-routes/get-busses-by-route/<int:route_id>
+    ---
+    tags:
+      - Bus Routes
+    parameters:
+      - name: route_id
+        in: path
+        required: true
+        type: integer
+    responses:
+      200:
+        description: OK
+    """
     return make_response(jsonify(bus_routes_controller.get_busses_by_route(route_id)), HTTPStatus.OK)
 
 
 @bus_routes_bp.get('/get-routes-by-bus/<int:bus_id>')
 def get_routes_by_bus(bus_id: int) -> Response:
+    """
+    GET /bus-routes/get-routes-by-bus/<int:bus_id>
+    ---
+    tags:
+      - Bus Routes
+    parameters:
+      - name: bus_id
+        in: path
+        required: true
+        type: integer
+    responses:
+      200:
+        description: OK
+    """
     return make_response(jsonify(bus_routes_controller.get_routes_by_bus(bus_id)), HTTPStatus.OK)

@@ -10,11 +10,35 @@ schedules_bp = Blueprint('schedules', __name__, url_prefix='/schedules')
 
 @schedules_bp.get('')
 def get_all_schedules() -> Response:
+    """
+    GET /schedules
+    ---
+    tags:
+      - Schedules
+    responses:
+      200:
+        description: OK
+    """
     return make_response(jsonify(schedules_controller.find_all()), HTTPStatus.OK)
 
 
 @schedules_bp.post('')
 def create_schedules() -> Response:
+    """
+    POST /schedules
+    ---
+    tags:
+      - Schedules
+    parameters:
+      - in: body
+        name: body
+        required: true
+        schema:
+          type: object
+    responses:
+      201:
+        description: OK
+    """
     content = request.get_json()
     schedules = Schedules.create_from_dto(content)
     schedules_controller.create(schedules)
@@ -23,11 +47,44 @@ def create_schedules() -> Response:
 
 @schedules_bp.get('/<int:schedules_id>')
 def get_schedules(schedules_id: int) -> Response:
+    """
+    GET /schedules/<int:schedules_id>
+    ---
+    tags:
+      - Schedules
+    parameters:
+      - name: schedules_id
+        in: path
+        required: true
+        type: integer
+    responses:
+      200:
+        description: OK
+    """
     return make_response(jsonify(schedules_controller.find_by_id(schedules_id)), HTTPStatus.OK)
 
 
 @schedules_bp.put('/<int:schedules_id>')
 def update_schedules(schedules_id: int) -> Response:
+    """
+    PUT /schedules/<int:schedules_id>
+    ---
+    tags:
+      - Schedules
+    parameters:
+      - name: schedules_id
+        in: path
+        required: true
+        type: integer
+      - in: body
+        name: body
+        required: true
+        schema:
+          type: object
+    responses:
+      200:
+        description: OK
+    """
     content = request.get_json()
     schedules = Schedules.create_from_dto(content)
     schedules_controller.update(schedules_id, schedules)
@@ -36,6 +93,25 @@ def update_schedules(schedules_id: int) -> Response:
 
 @schedules_bp.patch('/<int:schedules_id>')
 def patch_schedules(schedules_id: int) -> Response:
+    """
+    PATCH /schedules/<int:schedules_id>
+    ---
+    tags:
+      - Schedules
+    parameters:
+      - name: schedules_id
+        in: path
+        required: true
+        type: integer
+      - in: body
+        name: body
+        required: true
+        schema:
+          type: object
+    responses:
+      200:
+        description: OK
+    """
     content = request.get_json()
     schedules_controller.patch(schedules_id, content)
     return make_response("schedules updated", HTTPStatus.OK)
@@ -43,10 +119,38 @@ def patch_schedules(schedules_id: int) -> Response:
 
 @schedules_bp.delete('/<int:schedules_id>')
 def delete_schedules(schedules_id: int) -> Response:
+    """
+    DELETE /schedules/<int:schedules_id>
+    ---
+    tags:
+      - Schedules
+    parameters:
+      - name: schedules_id
+        in: path
+        required: true
+        type: integer
+    responses:
+      200:
+        description: OK
+    """
     schedules_controller.delete(schedules_id)
     return make_response("schedules deleted", HTTPStatus.OK)
 
 
 @schedules_bp.get('/get-schedules-by-route/<int:route_id>')
 def get_schedules_by_route(route_id: int) -> Response:
+    """
+    GET /schedules/get-schedules-by-route/<int:route_id>
+    ---
+    tags:
+      - Schedules
+    parameters:
+      - name: route_id
+        in: path
+        required: true
+        type: integer
+    responses:
+      200:
+        description: OK
+    """
     return make_response(jsonify(schedules_controller.get_schedules_by_route(route_id)), HTTPStatus.OK)

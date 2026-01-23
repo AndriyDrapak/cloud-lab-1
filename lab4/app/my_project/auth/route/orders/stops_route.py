@@ -10,11 +10,35 @@ stops_bp = Blueprint('stops', __name__, url_prefix='/stops')
 
 @stops_bp.get('')
 def get_all_stops() -> Response:
+    """
+    GET /stops
+    ---
+    tags:
+      - Stops
+    responses:
+      200:
+        description: OK
+    """
     return make_response(jsonify(stops_controller.find_all()), HTTPStatus.OK)
 
 
 @stops_bp.post('')
 def create_stops() -> Response:
+    """
+    POST /stops
+    ---
+    tags:
+      - Stops
+    parameters:
+      - in: body
+        name: body
+        required: true
+        schema:
+          type: object
+    responses:
+      201:
+        description: OK
+    """
     content = request.get_json()
     stops = Stops.create_from_dto(content)
     stops_controller.create(stops)
@@ -23,11 +47,44 @@ def create_stops() -> Response:
 
 @stops_bp.get('/<int:stops_id>')
 def get_stops(stops_id: int) -> Response:
+    """
+    GET /stops/<int:stops_id>
+    ---
+    tags:
+      - Stops
+    parameters:
+      - name: stops_id
+        in: path
+        required: true
+        type: integer
+    responses:
+      200:
+        description: OK
+    """
     return make_response(jsonify(stops_controller.find_by_id(stops_id)), HTTPStatus.OK)
 
 
 @stops_bp.put('/<int:stops_id>')
 def update_stops(stops_id: int) -> Response:
+    """
+    PUT /stops/<int:stops_id>
+    ---
+    tags:
+      - Stops
+    parameters:
+      - name: stops_id
+        in: path
+        required: true
+        type: integer
+      - in: body
+        name: body
+        required: true
+        schema:
+          type: object
+    responses:
+      200:
+        description: OK
+    """
     content = request.get_json()
     stops = Stops.create_from_dto(content)
     stops_controller.update(stops_id, stops)
@@ -36,6 +93,25 @@ def update_stops(stops_id: int) -> Response:
 
 @stops_bp.patch('/<int:stops_id>')
 def patch_stops(stops_id: int) -> Response:
+    """
+    PATCH /stops/<int:stops_id>
+    ---
+    tags:
+      - Stops
+    parameters:
+      - name: stops_id
+        in: path
+        required: true
+        type: integer
+      - in: body
+        name: body
+        required: true
+        schema:
+          type: object
+    responses:
+      200:
+        description: OK
+    """
     content = request.get_json()
     stops_controller.patch(stops_id, content)
     return make_response("stops updated", HTTPStatus.OK)
@@ -43,10 +119,38 @@ def patch_stops(stops_id: int) -> Response:
 
 @stops_bp.delete('/<int:stops_id>')
 def delete_stops(stops_id: int) -> Response:
+    """
+    DELETE /stops/<int:stops_id>
+    ---
+    tags:
+      - Stops
+    parameters:
+      - name: stops_id
+        in: path
+        required: true
+        type: integer
+    responses:
+      200:
+        description: OK
+    """
     stops_controller.delete(stops_id)
     return make_response("stops deleted", HTTPStatus.OK)
 
 
 @stops_bp.get('/get-stops-by-route/<int:route_id>')
 def get_stops_by_route(route_id: int) -> Response:
+    """
+    GET /stops/get-stops-by-route/<int:route_id>
+    ---
+    tags:
+      - Stops
+    parameters:
+      - name: route_id
+        in: path
+        required: true
+        type: integer
+    responses:
+      200:
+        description: OK
+    """
     return make_response(jsonify(stops_controller.get_stops_by_route(route_id)), HTTPStatus.OK)

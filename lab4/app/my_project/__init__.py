@@ -4,7 +4,7 @@ import secrets
 from typing import Dict, Any
 
 from flask import Flask
-from flask_restx import Api, Resource
+from flasgger import Swagger
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy_utils import database_exists, create_database
 
@@ -29,6 +29,34 @@ def create_app(app_config: Dict[str, Any], additional_config: Dict[str, Any]) ->
 
     _init_db(app)
     register_routes(app)
+
+    Swagger(app, config={
+        'headers': [],
+        'specs': [
+            {
+                'endpoint': 'apispec_1',
+                'route': '/apispec_1.json',
+                'rule_filter': lambda rule: True,  # include all endpoints
+                'model_filter': lambda tag: True,
+            }
+        ],
+        'swagger_ui': True,
+        'specs_route': '/apidocs/',
+    }, template={
+        'swagger': '2.0',
+        'info': {
+            'title': 'Lab4 API',
+            'description': 'REST endpoints documentation (Flasgger)',
+            'version': '1.0.0',
+        },
+    })
+
+    @app.get('/')
+    def _root():
+        # Convenience redirect for the browser
+        from flask import redirect
+        return redirect('/apidocs/')
+
 
     return app
 

@@ -10,11 +10,35 @@ driver_assignments_bp = Blueprint('driver_assignments', __name__, url_prefix='/d
 
 @driver_assignments_bp.get('')
 def get_all_driver_assignments() -> Response:
+    """
+    GET /driver-assignments
+    ---
+    tags:
+      - Driver Assignments
+    responses:
+      200:
+        description: OK
+    """
     return make_response(jsonify(driver_assignments_controller.find_all()), HTTPStatus.OK)
 
 
 @driver_assignments_bp.post('')
 def create_driver_assignments() -> Response:
+    """
+    POST /driver-assignments
+    ---
+    tags:
+      - Driver Assignments
+    parameters:
+      - in: body
+        name: body
+        required: true
+        schema:
+          type: object
+    responses:
+      201:
+        description: OK
+    """
     content = request.get_json()
     driver_assignments = DriverAssignments.create_from_dto(content)
     driver_assignments_controller.create(driver_assignments)
@@ -23,11 +47,44 @@ def create_driver_assignments() -> Response:
 
 @driver_assignments_bp.get('/<int:driver_assignments_id>')
 def get_driver_assignments(driver_assignments_id: int) -> Response:
+    """
+    GET /driver-assignments/<int:driver_assignments_id>
+    ---
+    tags:
+      - Driver Assignments
+    parameters:
+      - name: driver_assignments_id
+        in: path
+        required: true
+        type: integer
+    responses:
+      200:
+        description: OK
+    """
     return make_response(jsonify(driver_assignments_controller.find_by_id(driver_assignments_id)), HTTPStatus.OK)
 
 
 @driver_assignments_bp.put('/<int:driver_assignments_id>')
 def update_driver_assignments(driver_assignments_id: int) -> Response:
+    """
+    PUT /driver-assignments/<int:driver_assignments_id>
+    ---
+    tags:
+      - Driver Assignments
+    parameters:
+      - name: driver_assignments_id
+        in: path
+        required: true
+        type: integer
+      - in: body
+        name: body
+        required: true
+        schema:
+          type: object
+    responses:
+      200:
+        description: OK
+    """
     content = request.get_json()
     driver_assignments = DriverAssignments.create_from_dto(content)
     driver_assignments_controller.update(driver_assignments_id, driver_assignments)
@@ -36,6 +93,25 @@ def update_driver_assignments(driver_assignments_id: int) -> Response:
 
 @driver_assignments_bp.patch('/<int:driver_assignments_id>')
 def patch_driver_assignments(driver_assignments_id: int) -> Response:
+    """
+    PATCH /driver-assignments/<int:driver_assignments_id>
+    ---
+    tags:
+      - Driver Assignments
+    parameters:
+      - name: driver_assignments_id
+        in: path
+        required: true
+        type: integer
+      - in: body
+        name: body
+        required: true
+        schema:
+          type: object
+    responses:
+      200:
+        description: OK
+    """
     content = request.get_json()
     driver_assignments_controller.patch(driver_assignments_id, content)
     return make_response("driver_assignments updated", HTTPStatus.OK)
@@ -43,15 +119,57 @@ def patch_driver_assignments(driver_assignments_id: int) -> Response:
 
 @driver_assignments_bp.delete('/<int:driver_assignments_id>')
 def delete_driver_assignments(driver_assignments_id: int) -> Response:
+    """
+    DELETE /driver-assignments/<int:driver_assignments_id>
+    ---
+    tags:
+      - Driver Assignments
+    parameters:
+      - name: driver_assignments_id
+        in: path
+        required: true
+        type: integer
+    responses:
+      200:
+        description: OK
+    """
     driver_assignments_controller.delete(driver_assignments_id)
     return make_response("driver_assignments deleted", HTTPStatus.OK)
 
 
 @driver_assignments_bp.get('/get-drivers-by-bus-route/<int:bus_route_id>')
 def get_drivers_by_bus_route(bus_route_id: int) -> Response:
+    """
+    GET /driver-assignments/get-drivers-by-bus-route/<int:bus_route_id>
+    ---
+    tags:
+      - Driver Assignments
+    parameters:
+      - name: bus_route_id
+        in: path
+        required: true
+        type: integer
+    responses:
+      200:
+        description: OK
+    """
     return make_response(jsonify(driver_assignments_controller.get_drivers_by_bus_route(bus_route_id)), HTTPStatus.OK)
 
 
 @driver_assignments_bp.get('/get-bus-routes-by-driver/<int:driver_id>')
 def get_bus_routes_by_driver(driver_id: int) -> Response:
+    """
+    GET /driver-assignments/get-bus-routes-by-driver/<int:driver_id>
+    ---
+    tags:
+      - Driver Assignments
+    parameters:
+      - name: driver_id
+        in: path
+        required: true
+        type: integer
+    responses:
+      200:
+        description: OK
+    """
     return make_response(jsonify(driver_assignments_controller.get_bus_routes_by_driver(driver_id)), HTTPStatus.OK)
