@@ -1,12 +1,28 @@
-# venv
-venv/
-lab4/app/venv/
-.venv/
-
-# python
+# Python
 __pycache__/
 *.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.mypy_cache/
 
-# env/config
-.env
-config/
+# Virtualenv
+venv/
+.venv/
+lab4/app/venv/
+pip-wheel-metadata/
+
+# IDE
+.vscode/
+.idea/
+
+# Logs
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Flask
+instance/
+*.sqlite3
