@@ -117,8 +117,8 @@ def patch_bus_maintenance(bus_maintenance_id: int) -> Response:
     return make_response("bus_maintenance updated", HTTPStatus.OK)
 
 
-@bus_maintenance_bp.delete('/<int:bus_maintenance_id>')
-def delete_bus_maintenance(bus_maintenance_id: int) -> Response:
+#@bus_maintenance_bp.delete('/<int:bus_maintenance_id>')
+# def delete_bus_maintenance(bus_maintenance_id: int) -> Response:
     """
     DELETE /bus-maintenance/<int:bus_maintenance_id>
     ---
@@ -133,8 +133,8 @@ def delete_bus_maintenance(bus_maintenance_id: int) -> Response:
       200:
         description: OK
     """
-    bus_maintenance_controller.delete(bus_maintenance_id)
-    return make_response("bus_maintenance deleted", HTTPStatus.OK)
+  #  bus_maintenance_controller.delete(bus_maintenance_id)
+  #  return make_response("bus_maintenance deleted", HTTPStatus.OK)
 
 
 @bus_maintenance_bp.get('/get-bus-maintenances-by-bus/<int:bus_id>')
